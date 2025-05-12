@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.nasdaq'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '18'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // AWS Lambda
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.11.1'
+
+    // AWS S3 SDK (BOM 방식 권장)
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.12.529')
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+
+    // Jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.0'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
+
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+
+    // org.json
+    implementation group: 'org.json', name: 'json', version: '20160810'
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
