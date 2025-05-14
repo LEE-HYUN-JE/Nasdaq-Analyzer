@@ -7,8 +7,13 @@ import com.theokanning.openai.completion.CompletionChoice;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 import okhttp3.*;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 public class NasdaqNewsSummarizer implements RequestHandler<Object, String> {
@@ -91,9 +96,22 @@ public class NasdaqNewsSummarizer implements RequestHandler<Object, String> {
 
                 resultArray.add(result);
             }
+            String jsonOutput = new GsonBuilder().setPrettyPrinting().create().toJson(resultArray);
 
-            // 결과를 문자열로 리턴
-            return new GsonBuilder().setPrettyPrinting().create().toJson(resultArray);
+
+            S3Client s3 = S3Client.create();
+            String key = "nasdaq-summary/summary_" + LocalDate.now() + ".json";
+
+            PutObjectRequest putRequest = PutObjectRequest.builder()
+                    .bucket("nasdaq-analyzer-data")
+                    .key(key)
+                    .contentType("application/json")
+                    .build();
+
+            s3.putObject(putRequest, RequestBody.fromString(jsonOutput, StandardCharsets.UTF_8));
+            context.getLogger().log("S3 저장 완료: " + key + "\n");
+
+            return "성공: " + key;
 
         } catch (IOException e) {
             e.printStackTrace();

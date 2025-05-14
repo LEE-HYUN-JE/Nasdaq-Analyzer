@@ -3,6 +3,11 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2' // fat jar 생성용
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // ✅ Java 17로 컴파일
+    }
+}
 group = 'org.example'
 version = '1.0'
 
