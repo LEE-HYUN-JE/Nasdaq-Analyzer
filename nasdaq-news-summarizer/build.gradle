@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2' // fat jar 생성용
 }
 
 group = 'org.example'
-version = '1.0-SNAPSHOT'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -22,7 +23,19 @@ dependencies {
 // openapi
     implementation 'com.theokanning.openai-gpt3-java:service:0.16.0'
 //
-    implementation 'com.jzhangdeveloper.newsapi:newsapi-java:1.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    // AWS Lambda 인터페이스
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+}
+
+shadowJar {
+    archiveBaseName.set('nasdaq-news-summarizer')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
 
 test {
