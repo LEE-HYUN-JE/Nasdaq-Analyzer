@@ -24,7 +24,7 @@ public class DashboardRendererLambda implements RequestHandler<ScheduledEvent, S
     private static final String BUCKET_NAME = "nasdaq-analyzer-data";
     private static final String SUMMARY_PREFIX = "nasdaq-summary/summary_";
     private static final String QUOTE_PREFIX = "nasdaq-top10";
-    private static final String OUTPUT_KEY = "nasdaq-dashboard/index.html";
+    private static final String OUTPUT_KEY = "index.html";
 
     private final S3Client s3Client = S3Client.create();
     private final ObjectMapper objectMapper = new ObjectMapper();
