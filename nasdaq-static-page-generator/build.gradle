@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // Thymeleaf (standalone 사용 가능)
+    implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
+
+    // AWS SDK v2 (S3)
+    implementation platform('software.amazon.awssdk:bom:2.25.0')
+    implementation 'software.amazon.awssdk:s3'
+
+    // Jackson (JSON 파싱)
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+
+    // AWS Lambda Java Core (최신: 1.2.3)
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.3'
+    // AWS Lambda Java Events (최신: 3.15.0)
+    implementation 'com.amazonaws:aws-lambda-java-events:3.15.0'
+
+    // Lombok (선택)
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+}
+
+tasks.named('shadowJar') {
+    archiveBaseName.set("dashboard-renderer-lambda")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+}
+
+test {
+    useJUnitPlatform()
+}

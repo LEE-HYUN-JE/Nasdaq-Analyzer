@@ -5,7 +5,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17) // ✅ Java 17로 컴파일
+        languageVersion = JavaLanguageVersion.of(17) //  Java 17로 컴파일
     }
 }
 group = 'org.example'
