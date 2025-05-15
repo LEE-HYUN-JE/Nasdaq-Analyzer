@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.core.sync.RequestBody;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.*;
 
 public class NasdaqQuoteCollector implements RequestHandler<ScheduledEvent, String> {
@@ -34,7 +34,7 @@ public class NasdaqQuoteCollector implements RequestHandler<ScheduledEvent, Stri
                 entry.put("symbol", symbol);
                 entry.put("close", quote.getC());
                 entry.put("changePercent", quote.getDp());
-                entry.put("time", LocalDateTime.now().toString());
+                entry.put("time", LocalDate.now().toString());
                 results.add(entry);
             } catch (Exception e) {
                 context.getLogger().log("Error fetching quote for " + symbol + ": " + e.getMessage());
@@ -43,7 +43,7 @@ public class NasdaqQuoteCollector implements RequestHandler<ScheduledEvent, Stri
 
         try {
             String json = mapper.writeValueAsString(results);
-            String key = "nasdaq-top10-" + LocalDateTime.now() + ".json";
+            String key = "nasdaq-top10-" + LocalDate.now() + ".json";
 
             PutObjectRequest putReq = PutObjectRequest.builder()
                     .bucket(BUCKET_NAME)
