@@ -25,21 +25,6 @@
 📎 **[아키텍처 구조도 보기 (GitHub 파일 미리보기)](https://github.com/user-attachments/files/20218548/_.pdf)**  
 > GitHub 링크는 PDF 뷰어로 열립니다 (다운로드 아님)
 
----
-
-## 📂 프로젝트 구성
-
-nasdaq-analyzer/
-├── quote-collector/
-│ └── NasdaqQuoteCollector.java
-├── news-summarizer/
-│ └── NasdaqNewsSummarizer.java
-├── page-generator/
-│ ├── DashboardRendererLambda.java
-│ └── resources/templates/hot-topic.html
-└── shared/
-└── build.gradle (with shadowJar)
-
 
 ---
 
